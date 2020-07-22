@@ -2,6 +2,12 @@
 
 > A [Flarum](https://flarum.org) extension that allow users to embed video (DPlayer) using BBCode.
 
+![Screenshot 1](screen1.png)
+
+Click the cat button to open the modal below
+
+![Screenshot 2](screen2.png)
+
 ## Installation
 
 ```sh
