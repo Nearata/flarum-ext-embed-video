@@ -1,0 +1,45 @@
+{
+    "name": "nearata/flarum-ext-embed-video",
+    "description": "Allow users to embed video (DPlayer) using BBCode",
+    "keywords": [
+        "flarum",
+        "embed",
+        "video",
+        "dplayer",
+        "hls",
+        "shaka",
+        "webtorrent",
+        "flv",
+        "bbcode"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "require": {
+        "flarum/core": "^0.1.0-beta.13"
+    },
+    "authors": [
+        {
+            "name": "William Di Cicco (Nearata)",
+            "email": "williamdicicco@protonmail.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Nearata\\EmbedVideo\\": "src/"
+        }
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Embed Video",
+            "icon": {
+                "name": "fas fa-cat",
+                "backgroundColor": "#ffb000",
+                "color": "#fff"
+            }
+        },
+        "flagrow": {
+            "discuss": ""
+        }
+    }
+}
