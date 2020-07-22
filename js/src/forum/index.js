@@ -23,7 +23,7 @@ app.initializers.add('nearata/flarum-ext-embed-video', () => {
     window.muxjs = muxjs;
     window.WebTorrent = WebTorrent;
 
-    extend(TextEditor.prototype, 'controlItems', (items) => {
+    extend(TextEditor.prototype, 'controlItems', function(items) {
         items.add(
             'nearataEmbedVideo',
             Button.component({
