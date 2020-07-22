@@ -1,4 +1,4 @@
-# Minecraft Avatars
+# Embed Video
 
 > A [Flarum](https://flarum.org) extension that allow users to embed video (DPlayer) using BBCode.
 
