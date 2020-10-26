@@ -2,9 +2,8 @@ import app from 'flarum/app';
 import { extend } from 'flarum/extend';
 import Button from 'flarum/components/Button';
 import CommentPost from 'flarum/components/CommentPost';
-import DiscussionPage from 'flarum/components/DiscussionPage';
-import PostEdited from 'flarum/components/PostEdited';
 import TextEditor from 'flarum/components/TextEditor';
+import SuperTextarea from './utils/SuperTextarea';
 
 import EmbedVideoModal from './components/EmbedVideoModal';
 
@@ -23,57 +22,62 @@ app.initializers.add('nearata/flarum-ext-embed-video', () => {
     window.muxjs = muxjs;
     window.WebTorrent = WebTorrent;
 
+    extend(TextEditor.prototype, 'oncreate', function() {
+        const textArea = this.element.getElementsByTagName('textarea');
+        this.attrs.composer.editor = new SuperTextarea(textArea[0]);
+    });
+
     extend(TextEditor.prototype, 'controlItems', function(items) {
+        const editor = this.attrs.composer.editor;
         items.add(
             'nearataEmbedVideo',
             Button.component({
                 icon: 'fas fa-cat',
                 className: 'Button Button--icon',
-                onclick: () => app.modal.show(new EmbedVideoModal(this)),
-                title: app.translator.trans('nearata-embed-video.forum.button_tooltip_title')
-            })
+                onclick: () => app.modal.show(EmbedVideoModal, { editor: editor }),
+            }, app.translator.trans('nearata-embed-video.forum.button_tooltip_title'))
         )
     });
 
-    let playersList = [];
-    extend(CommentPost.prototype, 'config', () => {
-        const players = document.getElementsByClassName('dplayer-container');
+    const loadPlayers = videoPlayers => {
+        for (const p of videoPlayers) {
+            const videoUrl = p.dataset.url;
+            const videoType = p.dataset.type;
+            const liveMode = p.dataset.live;
 
-        for (let item of players) {
-            if (!playersList.includes(item.id)) {
-                playersList.push(item.id);
-                const id = item.id;
-                const videoUrl = item.dataset.url;
-                const videoType = item.dataset.type;
-                const liveMode = item.dataset.live;
-
-                new DPlayer({
-                    container: document.getElementById(id),
-                    live: liveMode === 'true' ? true : false,
-                    video: {
-                        url: videoUrl,
-                        type: videoType,
-                        customType: {
-                            dash: (video, player) => {
-                                window.dashjs.MediaPlayer().create().initialize(video, video.src, false);
-                            },
-                            shaka: (video, player) => {
-                                if (shaka.Player.isBrowserSupported()) {
-                                    new shaka.Player(video)
-                                    .load(video.src)
-                                    .then(() => {})
-                                    .catch(e => console.error(e));
-                                } else {
-                                    console.error('Error: Shaka is not supported.');
-                                }
+            new DPlayer({
+                container: p,
+                live: liveMode === 'true' ? true : false,
+                video: {
+                    url: videoUrl,
+                    type: videoType,
+                    customType: {
+                        dash: (video, player) => {
+                            window.dashjs.MediaPlayer().create().initialize(video, video.src, false);
+                        },
+                        shaka: (video, player) => {
+                            if (shaka.Player.isBrowserSupported()) {
+                                new shaka.Player(video)
+                                .load(video.src)
+                                .then(() => {})
+                                .catch(e => console.error(e));
+                            } else {
+                                console.error('Error: Shaka is not supported.');
                             }
                         }
                     }
-                });
-            }
+                }
+            });
         }
+    };
+
+    extend(CommentPost.prototype, 'oncreate', function () {
+        const videoPlayers = this.element.getElementsByClassName('dplayer-container');
+        loadPlayers(videoPlayers);
     });
 
-    extend(DiscussionPage.prototype, 'init', () => playersList = []);
-    extend(PostEdited.prototype, 'config', () => playersList = [])
+    extend(CommentPost.prototype, 'onupdate', function() {
+        const videoPlayers = this.element.getElementsByClassName('dplayer-container');
+        loadPlayers(videoPlayers);
+    });
 });

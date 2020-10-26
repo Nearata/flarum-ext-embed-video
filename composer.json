@@ -1,6 +1,6 @@
 {
     "name": "nearata/flarum-ext-embed-video",
-    "description": "Allow users to embed video (DPlayer) using BBCode",
+    "description": "Allow users to embed video using DPlayer and BBCode",
     "keywords": [
         "flarum",
         "embed",
@@ -15,11 +15,11 @@
     "type": "flarum-extension",
     "license": "MIT",
     "require": {
-        "flarum/core": "^0.1.0-beta.13"
+        "flarum/core": "^0.1.0-beta.14"
     },
     "authors": [
         {
-            "name": "William Di Cicco (Nearata)",
+            "name": "William Di Cicco",
             "email": "williamdicicco@protonmail.com",
             "role": "Developer"
         }
