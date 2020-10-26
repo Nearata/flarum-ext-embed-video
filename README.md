@@ -1,6 +1,6 @@
 # Embed Video
 
-> A [Flarum](https://flarum.org) extension that allow users to embed video (DPlayer) using BBCode.
+> A [Flarum](https://flarum.org) extension that allow users to embed video using BBCode.
 
 ![Screenshot 1](screen1.png)
 
