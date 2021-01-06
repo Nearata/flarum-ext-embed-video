@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Changes](https://github.com/Nearata/flarum-ext-embed-video/compare/v1.1.0...master)
 
+## [1.1.1] - 2021-01-06
+
+[Changes](https://github.com/Nearata/flarum-ext-embed-video/compare/v1.1.0...v1.1.1)
+
+- Fix [Issue#2](https://github.com/Nearata/flarum-ext-embed-video/issues/2)
+
 ## [1.1.0] - 2020-10-26
 
 [Changes](https://github.com/Nearata/flarum-ext-embed-video/compare/v1.0.0...v1.1.0)
