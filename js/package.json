@@ -8,9 +8,9 @@
     "flarum-webpack-config": "^0.1.0-beta.10",
     "flv.js": "^1.5.0",
     "hls.js": "^0.14.17",
-    "mux.js": "^5.7.0",
-    "shaka-player": "^3.0.6",
-    "webpack": "^4.44.2",
+    "mux.js": "^5.9.1",
+    "shaka-player": "^3.0.7",
+    "webpack": "^4.46.0",
     "webpack-cli": "^3.3.11",
     "webtorrent": "^0.108.6"
   },

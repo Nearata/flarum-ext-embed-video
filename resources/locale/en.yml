@@ -1,4 +1,8 @@
 nearata-embed-video:
+  admin:
+    settings:
+      permissions:
+        can_create_video_player: Can create video player
   forum:
     button_tooltip_title: Embed Video
     modal:
