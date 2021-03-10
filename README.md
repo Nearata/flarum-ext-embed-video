@@ -2,19 +2,13 @@
 
 > A [Flarum](https://flarum.org) extension that allow users to embed video using BBCode.
 
-![Screenshot 1](screen1.png)
-
-Click the cat button to open the modal below
-
-![Screenshot 2](screen2.png)
-
-## Installation
+## Install
 
 ```sh
 composer require nearata/flarum-ext-embed-video
 ```
 
-## Updating
+## Update
 
 ```sh
 composer update nearata/flarum-ext-embed-video
@@ -30,7 +24,7 @@ php flarum cache:clear
 
 ## License
 
-Distributed under the MIT license. See `LICENSE` for more information.
+Distributed under the MIT license. See [LICENSE](LICENSE) for more information.
 
 ## Contributing
 
@@ -41,4 +35,4 @@ Distributed under the MIT license. See `LICENSE` for more information.
 
 ## Credits
 
-- [MoePlayer/DPlayer](https://github.com/MoePlayer/DPlayer) ([DIYgod](https://github.com/DIYgod)) for the HTML5 video player
+- [DIYgod/DPlayer](https://github.com/DIYgod/DPlayer) for the HTML5 video player.
