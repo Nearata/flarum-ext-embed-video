@@ -3,6 +3,8 @@ import Modal from 'flarum/components/Modal';
 import Select from 'flarum/components/Select';
 import Switch from 'flarum/components/Switch';
 
+import { extensions } from '../extensions';
+
 export default class EmbedVideoModal extends Modal {
     oninit(vnode) {
         super.oninit(vnode);
@@ -10,6 +12,16 @@ export default class EmbedVideoModal extends Modal {
         this.videoUrl = '';
         this.videoType = 'normal';
         this.isLive = false;
+        this.videoOptions = {
+            normal: app.translator.trans('nearata-embed-video.forum.modal.video_types.normal')
+        };
+
+        extensions.forEach(ex => {
+            if (app.forum.attribute(`embedVideo${ex.attributeName}`)) {
+                const exName = ex.attributeName.toLowerCase();
+                this.videoOptions[exName] = app.translator.trans(`nearata-embed-video.forum.modal.video_types.${exName}`);
+            }
+        });
     }
 
     className() {
@@ -39,14 +51,7 @@ export default class EmbedVideoModal extends Modal {
                     m('.Form-group', [
                         m('label', app.translator.trans('nearata-embed-video.forum.modal.video_type_label')),
                         m(Select, {
-                            options: {
-                                normal: app.translator.trans('nearata-embed-video.forum.modal.video_types.normal'),
-                                dash: app.translator.trans('nearata-embed-video.forum.modal.video_types.dash'),
-                                flv: app.translator.trans('nearata-embed-video.forum.modal.video_types.flv'),
-                                hls: app.translator.trans('nearata-embed-video.forum.modal.video_types.hls'),
-                                shaka: app.translator.trans('nearata-embed-video.forum.modal.video_types.shaka'),
-                                webtorrent: app.translator.trans('nearata-embed-video.forum.modal.video_types.webtorrent')
-                            },
+                            options: this.videoOptions,
                             value: this.videoType,
                             onchange: value => this.videoType = value
                         })
@@ -64,6 +69,15 @@ export default class EmbedVideoModal extends Modal {
                             loading: this.loading
                         }, app.translator.trans('nearata-embed-video.forum.modal.submit_button'))
                     ])
+                ])
+            ]),
+            m('.Modal-footer', [
+                m('span', [
+                    'Powered by ',
+                    m('a', {
+                        href: 'https://github.com/DIYgod/DPlayer',
+                        target: '_blank'
+                    }, 'DPlayer')
                 ])
             ])
         ]

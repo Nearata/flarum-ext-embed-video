@@ -4,24 +4,10 @@ import Button from 'flarum/components/Button';
 import CommentPost from 'flarum/components/CommentPost';
 import TextEditor from 'flarum/components/TextEditor';
 
-import dashjs from 'dashjs';
-import FlvJs from 'flv.js';
-import Hls from 'hls.js';
-import muxjs from 'mux.js';
-import shaka from 'shaka-player';
-import WebTorrent from 'webtorrent/webtorrent.min';
-
-import DPlayer from 'dplayer';
-
+import { playerData, extensions } from './extensions';
 import EmbedVideoModal from './components/EmbedVideoModal';
 
 app.initializers.add('nearata-embed-video', () => {
-    window.dashjs = dashjs;
-    window.flvjs = FlvJs;
-    window.Hls = Hls;
-    window.muxjs = muxjs;
-    window.WebTorrent = WebTorrent;
-
     extend(TextEditor.prototype, 'controlItems', function (items) {
         if (!app.forum.attribute('embedVideoCreate')) {
             return;
@@ -39,8 +25,8 @@ app.initializers.add('nearata-embed-video', () => {
         );
     });
 
-    const loadPlayers = videoPlayers => {
-        for (const p of videoPlayers) {
+    const loadPlayers = containers => {
+        for (const p of containers) {
             const videoUrl = p.dataset.url;
             const videoType = p.dataset.type;
             const liveMode = p.dataset.live;
@@ -71,12 +57,64 @@ app.initializers.add('nearata-embed-video', () => {
         }
     };
 
-    extend(CommentPost.prototype, 'oncreate', function () {
-        this.videoPlayers = this.element.getElementsByClassName('dplayer-container');
-        loadPlayers(this.videoPlayers);
-    });
+    const loadScript = extension => {
+        return new Promise(resolve => {
+            const script = document.createElement('script');
+            script.src = extension.url;
 
-    extend(CommentPost.prototype, 'onupdate', function () {
-        loadPlayers(this.videoPlayers);
+            if (extension.integrity) {
+                script.integrity = extension.integrity;
+                script.crossOrigin = 'anonymous';
+            }
+
+            script.async = true;
+            script.onload = resolve;
+            document.body.appendChild(script);
+        });
+    };
+
+    extend(CommentPost.prototype, 'oncreate', function () {
+        const containers = this.element.querySelectorAll('.dplayer-container');
+
+        if (containers.length) {
+            const initPlayer = new Promise(resolve => {
+                if (playerData.loaded) {
+                    const interval = setInterval(async () => {
+                        if (window.DPlayer) {
+                            clearInterval(interval);
+                            resolve();
+                        }
+                    }, 1000);
+                } else {
+                    playerData.loaded = true;
+                    loadScript(playerData).then(() => resolve());
+                }
+            }).then(() => {
+                return new Promise(resolve => {
+                    const extensionsPromise = new Promise(resolveExtensions => {
+                        extensions.forEach(ex => {
+                            if (ex.loaded) {
+                                const interval = setInterval(() => {
+                                    if (ex.window) {
+                                        clearInterval(interval);
+                                    }
+                                }, 1000);
+                            }
+
+                            if (app.forum.attribute(`embedVideo${ex.attributeName}`) && !ex.loaded) {
+                                ex.loaded = true;
+                                loadScript(ex);
+                            }
+                        });
+
+                        resolveExtensions();
+                    });
+
+                    extensionsPromise.then(() => resolve());
+                });
+            });
+
+            initPlayer.then(() => loadPlayers(containers));
+        }
     });
 });
