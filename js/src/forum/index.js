@@ -20,7 +20,8 @@ app.initializers.add('nearata-embed-video', () => {
             m(Button, {
                 icon: 'fas fa-cat',
                 class: 'Button Button--icon',
-                onclick: () => app.modal.show(EmbedVideoModal, { editor: editor })
+                onclick: () => app.modal.show(EmbedVideoModal, { editor: editor }),
+                oncreate: vnode => $(vnode.dom).tooltip()
             }, app.translator.trans('nearata-embed-video.forum.button_tooltip_title'))
         );
     });
