@@ -34,6 +34,7 @@ app.initializers.add('nearata-embed-video', () => {
             new DPlayer({
                 container: p,
                 live: liveMode === 'true' ? true : false,
+                theme: app.forum.attribute('embedVideoTheme') || '#b7daff',
                 video: {
                     url: videoUrl,
                     type: videoType,

@@ -37,6 +37,19 @@ app.initializers.add('nearata-embed-video', () => {
                 type: 'boolean'
             }
         )
+        .registerSetting(function () {
+            return [
+                m('.Form-group', [
+                    m('label', app.translator.trans('nearata-embed-video.admin.settings.options.theme')),
+                    m('input', {
+                        type: 'text',
+                        class: 'FormControl',
+                        bidi: this.setting('nearata-embed-video.admin.settings.options.theme'),
+                        placeholder: '#b7daff'
+                    })
+                ])
+            ]
+        })
         .registerPermission(
             {
                 icon: 'fas fa-tag',

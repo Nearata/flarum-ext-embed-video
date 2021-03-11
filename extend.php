@@ -21,7 +21,12 @@ return [
     (new Extend\Formatter)
         ->configure(function (Configurator $config) {
             $config->BBCodes->addCustom(
-                '[embed-video id="{NUMBER}" url="{ANYTHING}" type="{TEXT2}" live="{TEXT3}"]',
+                '[embed-video
+                    id="{NUMBER}"
+                    url="{ANYTHING}"
+                    type="{TEXT2}"
+                    live="{TEXT3}"
+                ]',
                 '<div
                     id="player-{NUMBER}"
                     class="dplayer-container"
@@ -63,5 +68,8 @@ return [
         })
         ->serializeToForum('embedVideoWebTorrent', 'nearata-embed-video.admin.settings.video_type.webtorrent', function ($retrievedValue) {
             return (bool) $retrievedValue;
+        })
+        ->serializeToForum('embedVideoTheme', 'nearata-embed-video.admin.settings.options.theme', function ($retrievedValue) {
+            return (string) $retrievedValue;
         })
 ];

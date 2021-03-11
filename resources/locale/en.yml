@@ -1,6 +1,8 @@
 nearata-embed-video:
   admin:
     settings:
+      options:
+        theme: Theme color
       permissions:
         can_create_video_player: Can create video player
       video_types:
