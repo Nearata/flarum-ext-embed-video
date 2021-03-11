@@ -3,6 +3,7 @@ nearata-embed-video:
     settings:
       options:
         airplay: Airplay
+        hotkey: Hotkey
         theme: Theme color
         lang: Player language
         logo: Logo URL

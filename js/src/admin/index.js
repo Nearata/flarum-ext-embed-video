@@ -77,6 +77,13 @@ app.initializers.add('nearata-embed-video', () => {
                 type: 'boolean'
             }
         )
+        .registerSetting(
+            {
+                setting: 'nearata-embed-video.admin.settings.options.hotkey',
+                label: app.translator.trans('nearata-embed-video.admin.settings.options.hotkey'),
+                type: 'boolean'
+            }
+        )
         .registerPermission(
             {
                 icon: 'fas fa-tag',

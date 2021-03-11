@@ -81,4 +81,7 @@ return [
         ->serializeToForum('embedVideoAirplay', 'nearata-embed-video.admin.settings.options.airplay', function ($retrievedValue) {
             return (bool) $retrievedValue;
         })
+        ->serializeToForum('embedVideoHotkey', 'nearata-embed-video.admin.settings.options.hotkey', function ($retrievedValue) {
+            return (bool) $retrievedValue;
+        })
 ];
