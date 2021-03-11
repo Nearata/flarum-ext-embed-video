@@ -70,6 +70,13 @@ app.initializers.add('nearata-embed-video', () => {
                 default: 'en'
             }
         )
+        .registerSetting(
+            {
+                setting: 'nearata-embed-video.admin.settings.options.airplay',
+                label: app.translator.trans('nearata-embed-video.admin.settings.options.airplay'),
+                type: 'boolean'
+            }
+        )
         .registerPermission(
             {
                 icon: 'fas fa-tag',

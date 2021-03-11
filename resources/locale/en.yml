@@ -2,6 +2,7 @@ nearata-embed-video:
   admin:
     settings:
       options:
+        airplay: Airplay
         theme: Theme color
         lang: Player language
         logo: Logo URL

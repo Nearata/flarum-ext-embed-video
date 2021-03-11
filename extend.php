@@ -78,4 +78,7 @@ return [
         ->serializeToForum('embedVideoLang', 'nearata-embed-video.admin.settings.options.lang', function ($retrievedValue) {
             return (string) $retrievedValue;
         })
+        ->serializeToForum('embedVideoAirplay', 'nearata-embed-video.admin.settings.options.airplay', function ($retrievedValue) {
+            return (string) $retrievedValue;
+        })
 ];
