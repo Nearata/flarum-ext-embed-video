@@ -3,6 +3,7 @@ nearata-embed-video:
     settings:
       options:
         theme: Theme color
+        lang: Player language
         logo: Logo URL
       permissions:
         can_create_video_player: Can create video player

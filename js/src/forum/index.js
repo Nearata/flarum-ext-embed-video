@@ -36,6 +36,7 @@ app.initializers.add('nearata-embed-video', () => {
                 live: liveMode === 'true' ? true : false,
                 theme: app.forum.attribute('embedVideoTheme') || '#b7daff',
                 logo: app.forum.attribute('embedVideoLogo') || '',
+                lang: app.forum.attribute('embedVideoLang') || '',
                 video: {
                     url: videoUrl,
                     type: videoType,

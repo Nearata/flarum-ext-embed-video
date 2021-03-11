@@ -75,4 +75,7 @@ return [
         ->serializeToForum('embedVideoLogo', 'nearata-embed-video.admin.settings.options.logo', function ($retrievedValue) {
             return (string) $retrievedValue;
         })
+        ->serializeToForum('embedVideoLang', 'nearata-embed-video.admin.settings.options.lang', function ($retrievedValue) {
+            return (string) $retrievedValue;
+        })
 ];

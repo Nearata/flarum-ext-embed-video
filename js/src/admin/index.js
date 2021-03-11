@@ -57,6 +57,19 @@ app.initializers.add('nearata-embed-video', () => {
                 type: 'text'
             }
         )
+        .registerSetting(
+            {
+                setting: 'nearata-embed-video.admin.settings.options.lang',
+                label: app.translator.trans('nearata-embed-video.admin.settings.options.lang'),
+                type: 'select',
+                options: {
+                    en: 'English',
+                    'zh-cn': 'Chinese Simplified',
+                    'zh-tw': 'Chinese Traditional'
+                },
+                default: 'en'
+            }
+        )
         .registerPermission(
             {
                 icon: 'fas fa-tag',
