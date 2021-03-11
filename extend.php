@@ -79,6 +79,6 @@ return [
             return (string) $retrievedValue;
         })
         ->serializeToForum('embedVideoAirplay', 'nearata-embed-video.admin.settings.options.airplay', function ($retrievedValue) {
-            return (string) $retrievedValue;
+            return (bool) $retrievedValue;
         })
 ];
