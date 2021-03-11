@@ -50,6 +50,13 @@ app.initializers.add('nearata-embed-video', () => {
                 ])
             ]
         })
+        .registerSetting(
+            {
+                setting: 'nearata-embed-video.admin.settings.options.logo',
+                label: app.translator.trans('nearata-embed-video.admin.settings.options.logo'),
+                type: 'text'
+            }
+        )
         .registerPermission(
             {
                 icon: 'fas fa-tag',
