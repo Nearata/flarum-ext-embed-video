@@ -62,6 +62,13 @@ export default class EmbedVideoModal extends Modal {
                             state: this.isLive
                         }, app.translator.trans('nearata-embed-video.forum.modal.live_mode'))
                     ]),
+                    app.forum.attribute('embedVideoQualitySwitching') ? m('.Form-group', [
+                        m('a', {
+                            class: 'Button Button--primary',
+                            href: 'https://github.com/Nearata/flarum-ext-embed-video/blob/master/QUALITY_SWITCHING.md',
+                            target: '_blank'
+                        }, 'Quality Switching tutorial')
+                    ]) : null,
                     m('.Form-group', [
                         m(Button, {
                             className: 'Button Button--primary Button--block',
