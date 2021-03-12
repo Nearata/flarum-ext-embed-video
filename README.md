@@ -22,6 +22,10 @@ composer remove nearata/flarum-ext-embed-video
 php flarum cache:clear
 ```
 
+## Quality Switching
+
+See [QUALITY_SWITCHING.md](QUALITY_SWITCHING.md).
+
 ## License
 
 Distributed under the MIT license. See [LICENSE](LICENSE) for more information.
