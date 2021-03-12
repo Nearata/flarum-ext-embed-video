@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.0] - 2021-01-28
 
-[Changes](https://github.com/Nearata/flarum-ext-embed-video/compare/v1.0.0...v1.2.0)
+[Changes](https://github.com/Nearata/flarum-ext-embed-video/compare/v1.1.0...v1.2.0)
 
 - removed SuperTextArea
 - added permissions
