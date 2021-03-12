@@ -26,6 +26,7 @@ return [
                     url="{ANYTHING}"
                     type="{TEXT2}"
                     live="{TEXT3}"
+                    qualities="{ANYTHING2;optional}"
                 ]',
                 '<div
                     id="player-{NUMBER}"
@@ -33,6 +34,7 @@ return [
                     data-url="{ANYTHING}"
                     data-type="{TEXT2}"
                     data-live="{TEXT3}"
+                    data-qualities="{ANYTHING2}"
                 >
                 </div>'
             );
@@ -82,6 +84,9 @@ return [
             return (bool) $retrievedValue;
         })
         ->serializeToForum('embedVideoHotkey', 'nearata-embed-video.admin.settings.options.hotkey', function ($retrievedValue) {
+            return (bool) $retrievedValue;
+        })
+        ->serializeToForum('embedVideoQualitySwitching', 'nearata-embed-video.admin.settings.options.quality_switching', function ($retrievedValue) {
             return (bool) $retrievedValue;
         })
 ];

@@ -31,6 +31,30 @@ app.initializers.add('nearata-embed-video', () => {
             const videoUrl = p.dataset.url;
             const videoType = p.dataset.type;
             const liveMode = p.dataset.live;
+            const qualities = p.dataset.qualities;
+
+            let qualitySwitching = [];
+
+            if (qualities) {
+                if (videoUrl) {
+                    qualitySwitching.push({
+                        name: 'default',
+                        url: videoUrl,
+                        type: videoType
+                    });
+                }
+
+                qualities.split(',').forEach(q => {
+                    const qData = q.split(';');
+                    qualitySwitching.push({
+                        name: qData[0],
+                        url: qData[1],
+                        type: qData.length < 3 ? 'auto' : qData[2]
+                    });
+                });
+            }
+
+            const isQualitySwitching = app.forum.attribute('embedVideoQualitySwitching') && qualitySwitching.length > 0;
 
             new DPlayer({
                 container: p,
@@ -40,7 +64,7 @@ app.initializers.add('nearata-embed-video', () => {
                 lang: app.forum.attribute('embedVideoLang') || '',
                 airplay: app.forum.attribute('embedVideoAirplay') || false,
                 hotkey: app.forum.attribute('embedVideoHotkey') || false,
-                video: {
+                video: !isQualitySwitching ? {
                     url: videoUrl,
                     type: videoType,
                     customType: {
@@ -58,7 +82,7 @@ app.initializers.add('nearata-embed-video', () => {
                             }
                         }
                     }
-                }
+                } : { quality: qualitySwitching, defaultQuality: 0 }
             });
         }
     };

@@ -84,6 +84,13 @@ app.initializers.add('nearata-embed-video', () => {
                 type: 'boolean'
             }
         )
+        .registerSetting(
+            {
+                setting: 'nearata-embed-video.admin.settings.options.quality_switching',
+                label: app.translator.trans('nearata-embed-video.admin.settings.options.quality_switching'),
+                type: 'boolean'
+            }
+        )
         .registerPermission(
             {
                 icon: 'fas fa-tag',
