@@ -1,13 +1,12 @@
-import app from 'flarum/app';
-import { extend } from 'flarum/extend';
-import Button from 'flarum/components/Button';
-import CommentPost from 'flarum/components/CommentPost';
-import TextEditor from 'flarum/components/TextEditor';
+import { extend } from 'flarum/common/extend';
+import Button from 'flarum/forum/components/Button';
+import CommentPost from 'flarum/forum/components/CommentPost';
+import TextEditor from 'flarum/forum/components/TextEditor';
 
 import { playerData, extensions } from './extensions';
 import EmbedVideoModal from './components/EmbedVideoModal';
 
-app.initializers.add('nearata-embed-video', () => {
+app.initializers.add('nearata-embed-video', app => {
     extend(TextEditor.prototype, 'controlItems', function (items) {
         if (!app.forum.attribute('embedVideoCreate')) {
             return;

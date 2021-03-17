@@ -6,10 +6,10 @@ use Flarum\Extend;
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Post\Event\Saving;
 
-use s9e\TextFormatter\Configurator;
-
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+
+use s9e\TextFormatter\Configurator;
 
 return [
     (new Extend\Frontend('forum'))

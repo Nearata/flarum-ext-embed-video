@@ -1,7 +1,7 @@
-import Button from 'flarum/components/Button';
-import Modal from 'flarum/components/Modal';
-import Select from 'flarum/components/Select';
-import Switch from 'flarum/components/Switch';
+import Button from 'flarum/common/components/Button';
+import Modal from 'flarum/common/components/Modal';
+import Select from 'flarum/common/components/Select';
+import Switch from 'flarum/common/components/Switch';
 
 import { extensions } from '../extensions';
 

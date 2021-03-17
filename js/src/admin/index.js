@@ -1,6 +1,4 @@
-import app from 'flarum/app';
-
-app.initializers.add('nearata-embed-video', () => {
+app.initializers.add('nearata-embed-video', app => {
     app.extensionData.for('nearata-embed-video')
         .registerSetting(
             {

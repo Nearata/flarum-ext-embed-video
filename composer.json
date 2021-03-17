@@ -20,7 +20,7 @@
         "forum": "https://discuss.flarum.org/d/24527"
     },
     "require": {
-        "flarum/core": "^0.1.0-beta.15"
+        "flarum/core": ">=0.1.0-beta.16 <=0.1.0"
     },
     "authors": [
         {
@@ -37,6 +37,7 @@
     "extra": {
         "flarum-extension": {
             "title": "Embed Video",
+            "category": "feature",
             "icon": {
                 "name": "fas fa-cat",
                 "backgroundColor": "#ffb000",
