@@ -102,48 +102,48 @@ app.initializers.add('nearata-embed-video', app => {
         });
     };
 
+    const loadExtensions = () => {
+        return new Promise(resolve => {
+            extensions.forEach(ex => {
+                if (ex.loaded) {
+                    const interval = setInterval(() => {
+                        if (ex.window) {
+                            clearInterval(interval);
+                        }
+                    }, 1000);
+                }
+
+                if (app.forum.attribute(`embedVideo${ex.attributeName}`) && !ex.loaded) {
+                    ex.loaded = true;
+                    loadScript(ex);
+                }
+            });
+
+            resolve();
+        });
+    };
+
+    const loadPlayer = () => {
+        return new Promise(resolve => {
+            if (playerData.loaded) {
+                const interval = setInterval(async () => {
+                    if (window.DPlayer) {
+                        clearInterval(interval);
+                        resolve();
+                    }
+                }, 1000);
+            } else {
+                playerData.loaded = true;
+                loadScript(playerData).then(() => resolve());
+            }
+        });
+    };
+
     extend(CommentPost.prototype, 'oncreate', function () {
         const containers = this.element.querySelectorAll('.dplayer-container');
 
         if (containers.length) {
-            const initPlayer = new Promise(resolve => {
-                if (playerData.loaded) {
-                    const interval = setInterval(async () => {
-                        if (window.DPlayer) {
-                            clearInterval(interval);
-                            resolve();
-                        }
-                    }, 1000);
-                } else {
-                    playerData.loaded = true;
-                    loadScript(playerData).then(() => resolve());
-                }
-            }).then(() => {
-                return new Promise(resolve => {
-                    const extensionsPromise = new Promise(resolveExtensions => {
-                        extensions.forEach(ex => {
-                            if (ex.loaded) {
-                                const interval = setInterval(() => {
-                                    if (ex.window) {
-                                        clearInterval(interval);
-                                    }
-                                }, 1000);
-                            }
-
-                            if (app.forum.attribute(`embedVideo${ex.attributeName}`) && !ex.loaded) {
-                                ex.loaded = true;
-                                loadScript(ex);
-                            }
-                        });
-
-                        resolveExtensions();
-                    });
-
-                    extensionsPromise.then(() => resolve());
-                });
-            });
-
-            initPlayer.then(() => loadPlayers(containers));
+            loadExtensions().then(() => loadPlayer().then(() => loadPlayers(containers)));
         }
     });
 });
