@@ -26,10 +26,6 @@ php flarum cache:clear
 
 See [QUALITY_SWITCHING.md](QUALITY_SWITCHING.md).
 
-## License
-
-Distributed under the MIT license. See [LICENSE](LICENSE) for more information.
-
 ## Contributing
 
 1. Fork it
@@ -40,3 +36,7 @@ Distributed under the MIT license. See [LICENSE](LICENSE) for more information.
 ## Credits
 
 - [DIYgod/DPlayer](https://github.com/DIYgod/DPlayer) for the HTML5 video player.
+
+## License
+
+Distributed under the MIT license. See [LICENSE](LICENSE) for more information.
