@@ -28,17 +28,10 @@ php flarum cache:clear
 
 See [QUALITY_SWITCHING.md](QUALITY_SWITCHING.md).
 
-## Contributing
-
-1. Fork it
-2. Commit your changes
-3. Push to the branch
-4. Create a new Pull Request
-
 ## Credits
 
 - [DIYgod/DPlayer](https://github.com/DIYgod/DPlayer) for the HTML5 video player.
 
 ## License
 
-Distributed under the MIT license. See [LICENSE](LICENSE) for more information.
+Distributed under the MIT license. See [LICENSE](LICENSE) for details.
