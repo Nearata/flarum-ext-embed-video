@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[Changes](https://github.com/Nearata/flarum-ext-embed-video/compare/v2.1.0...master)
+[Changes](https://github.com/Nearata/flarum-ext-embed-video/compare/v3.0.0...master)
 
 ## [3.0.0] - 2021-06-20
 
