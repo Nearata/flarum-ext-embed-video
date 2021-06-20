@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Changes](https://github.com/Nearata/flarum-ext-embed-video/compare/v2.1.0...master)
 
+## [3.0.0] - 2021-06-20
+
+- (Updated) Flarum 1.0
+- (Updated) MSE extensions
+
 ## [2.1.1] - 2021-04-16
 
 - (Fix) The player was loaded before the extensions and as result the extensions were not working properly.
