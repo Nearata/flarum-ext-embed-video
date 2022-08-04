@@ -1,7 +1,5 @@
 # Embed Video
 
-![latest](https://flarum-badge-api.davwheat.dev/v1/compat-latest/nearata/flarum-ext-embed-video)
-
 > A [Flarum](https://flarum.org) extension that allow users to embed video using BBCode.
 
 ## Install
@@ -27,4 +25,3 @@ php flarum cache:clear
 ## Quality Switching
 
 See [QUALITY_SWITCHING.md](QUALITY_SWITCHING.md).
-
