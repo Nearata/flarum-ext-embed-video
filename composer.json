@@ -13,7 +13,7 @@
         "bbcode"
     ],
     "type": "flarum-extension",
-    "license": "MIT",
+    "license": "Unlicense",
     "support": {
         "issues": "https://github.com/Nearata/flarum-ext-embed-video/issues",
         "source": "https://github.com/Nearata/flarum-ext-embed-video",
