@@ -1,6 +1,6 @@
 {
     "name": "nearata/flarum-ext-embed-video",
-    "description": "Allow users to embed video using DPlayer and BBCode",
+    "description": "Allow users to embed video using BBCode",
     "keywords": [
         "flarum",
         "embed",

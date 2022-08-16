@@ -1,3 +1,5 @@
+import app from "flarum/admin/app";
+
 app.initializers.add("nearata-embed-video", (app) => {
     app.extensionData
         .for("nearata-embed-video")
@@ -36,25 +38,12 @@ app.initializers.add("nearata-embed-video", (app) => {
             ),
             type: "boolean",
         })
-        .registerSetting(function () {
-            return [
-                m(".Form-group", [
-                    m(
-                        "label",
-                        app.translator.trans(
-                            "nearata-embed-video.admin.settings.options.theme"
-                        )
-                    ),
-                    m("input", {
-                        type: "text",
-                        class: "FormControl",
-                        bidi: this.setting(
-                            "nearata-embed-video.admin.settings.options.theme"
-                        ),
-                        placeholder: "#b7daff",
-                    }),
-                ]),
-            ];
+        .registerSetting({
+            setting: "nearata-embed-video.admin.settings.options.theme",
+            label: app.translator.trans(
+                "nearata-embed-video.admin.settings.options.theme"
+            ),
+            type: "color-preview",
         })
         .registerSetting({
             setting: "nearata-embed-video.admin.settings.options.logo",
@@ -105,7 +94,7 @@ app.initializers.add("nearata-embed-video", (app) => {
                     "nearata-embed-video.admin.settings.permissions.can_create_video_player"
                 ),
                 permission: "nearata.embedvideo.create",
-                tagScoped: true
+                tagScoped: true,
             },
             "start",
             95

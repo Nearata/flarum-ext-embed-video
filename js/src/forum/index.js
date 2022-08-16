@@ -1,11 +1,12 @@
-import { extend } from "flarum/common/extend";
+import EmbedVideoModal from "./components/EmbedVideoModal";
+import { playerData, extensions } from "./extensions";
+import load from "external-load";
 import Tooltip from "flarum/common/components/Tooltip";
+import { extend } from "flarum/common/extend";
+import app from "flarum/forum/app";
 import Button from "flarum/forum/components/Button";
 import CommentPost from "flarum/forum/components/CommentPost";
 import TextEditor from "flarum/forum/components/TextEditor";
-
-import { playerData, extensions } from "./extensions";
-import EmbedVideoModal from "./components/EmbedVideoModal";
 
 const loadPlayers = (containers) => {
     for (const p of containers) {
@@ -77,38 +78,20 @@ const loadPlayers = (containers) => {
     }
 };
 
-const loadScript = (extension) => {
-    return new Promise((resolve) => {
-        const script = document.createElement("script");
-        script.src = extension.url;
+const loadScript = async (extension) => {
+    await load.js(extension.url);
 
-        if (extension.integrity) {
-            script.integrity = extension.integrity;
-            script.crossOrigin = "anonymous";
-        }
-
-        script.async = true;
-        script.onload = resolve;
-        document.body.appendChild(script);
-    });
+    extension.loaded = true;
 };
 
 const loadExtensions = () => {
     return new Promise((resolve) => {
         extensions.forEach((ex) => {
-            if (ex.loaded) {
-                const interval = setInterval(() => {
-                    if (ex.window) {
-                        clearInterval(interval);
-                    }
-                }, 1000);
-            }
+            const isExtensionEnabled = app.forum.attribute(
+                `embedVideo${ex.attributeName}`
+            );
 
-            if (
-                app.forum.attribute(`embedVideo${ex.attributeName}`) &&
-                !ex.loaded
-            ) {
-                ex.loaded = true;
+            if (isExtensionEnabled && !ex.loaded) {
                 loadScript(ex);
             }
         });
@@ -120,14 +103,8 @@ const loadExtensions = () => {
 const loadPlayer = () => {
     return new Promise((resolve) => {
         if (playerData.loaded) {
-            const interval = setInterval(() => {
-                if (window.DPlayer) {
-                    clearInterval(interval);
-                    resolve();
-                }
-            }, 1000);
+            resolve();
         } else {
-            playerData.loaded = true;
             loadScript(playerData).then(() => resolve());
         }
     });
@@ -166,8 +143,8 @@ app.initializers.add("nearata-embed-video", () => {
         const containers = this.element.querySelectorAll(".dplayer-container");
 
         if (containers.length) {
-            loadExtensions().then(() =>
-                loadPlayer().then(() => loadPlayers(containers))
+            Promise.all([loadExtensions(), loadPlayer()]).then((_) =>
+                loadPlayers(containers)
             );
         }
     });

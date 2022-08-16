@@ -8,13 +8,6 @@
 composer require nearata/flarum-ext-embed-video
 ```
 
-## Update
-
-```sh
-composer update nearata/flarum-ext-embed-video
-php flarum cache:clear
-```
-
 ## Remove
 
 ```sh
