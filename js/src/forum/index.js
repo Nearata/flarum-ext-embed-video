@@ -6,79 +6,80 @@ import { extend } from "flarum/common/extend";
 import app from "flarum/forum/app";
 import Button from "flarum/forum/components/Button";
 import CommentPost from "flarum/forum/components/CommentPost";
+import ComposerPostPreview from "flarum/forum/components/ComposerPostPreview";
 import TextEditor from "flarum/forum/components/TextEditor";
 
-const loadPlayers = (containers) => {
-    for (const p of containers) {
-        const videoUrl = p.dataset.url;
-        const videoType = p.dataset.type;
-        const liveMode = p.dataset.live;
-        const qualities = p.dataset.qualities;
+const createInstance = (container) => {
+    const videoUrl = container.dataset.url;
+    const videoType = container.dataset.type;
+    const liveMode = container.dataset.live;
+    const qualities = container.dataset.qualities;
 
-        let qualitySwitching = [];
+    let qualitySwitching = [];
 
-        if (qualities) {
-            if (videoUrl) {
-                qualitySwitching.push({
-                    name: "default",
-                    url: videoUrl,
-                    type: videoType,
-                });
-            }
-
-            qualities.split(",").forEach((q) => {
-                const qData = q.split(";");
-                qualitySwitching.push({
-                    name: qData[0],
-                    url: qData[1],
-                    type: qData.length < 3 ? "auto" : qData[2],
-                });
+    if (qualities) {
+        if (videoUrl) {
+            qualitySwitching.push({
+                name: "default",
+                url: videoUrl,
+                type: videoType,
             });
         }
 
-        const isQualitySwitching =
-            app.forum.attribute("embedVideoQualitySwitching") &&
-            qualitySwitching.length > 0;
-
-        new DPlayer({
-            container: p,
-            live: liveMode === "true" ? true : false,
-            theme: app.forum.attribute("embedVideoTheme") || "#b7daff",
-            logo: app.forum.attribute("embedVideoLogo") || "",
-            lang: app.forum.attribute("embedVideoLang") || "",
-            airplay: app.forum.attribute("embedVideoAirplay") || false,
-            hotkey: app.forum.attribute("embedVideoHotkey") || false,
-            video: !isQualitySwitching
-                ? {
-                      url: videoUrl,
-                      type: videoType,
-                      customType: {
-                          dash: (video, player) => {
-                              window.dashjs
-                                  .MediaPlayer()
-                                  .create()
-                                  .initialize(video, video.src, false);
-                          },
-                          shaka: (video, player) => {
-                              if (shaka.Player.isBrowserSupported()) {
-                                  new shaka.Player(video)
-                                      .load(video.src)
-                                      .then(() => {})
-                                      .catch((e) => console.error(e));
-                              } else {
-                                  console.error(
-                                      "Error: Shaka is not supported."
-                                  );
-                              }
-                          },
-                      },
-                  }
-                : { quality: qualitySwitching, defaultQuality: 0 },
+        qualities.split(",").forEach((q) => {
+            const qData = q.split(";");
+            qualitySwitching.push({
+                name: qData[0],
+                url: qData[1],
+                type: qData.length < 3 ? "auto" : qData[2],
+            });
         });
     }
+
+    const isQualitySwitching =
+        app.forum.attribute("embedVideoQualitySwitching") &&
+        qualitySwitching.length > 0;
+
+    new DPlayer({
+        container: container,
+        live: liveMode === "true" ? true : false,
+        theme: app.forum.attribute("embedVideoTheme") || "#b7daff",
+        logo: app.forum.attribute("embedVideoLogo") || "",
+        lang: app.forum.attribute("embedVideoLang") || "",
+        airplay: app.forum.attribute("embedVideoAirplay") || false,
+        hotkey: app.forum.attribute("embedVideoHotkey") || false,
+        video: !isQualitySwitching
+            ? {
+                  url: videoUrl,
+                  type: videoType,
+                  customType: {
+                      dash: (video, player) => {
+                          window.dashjs
+                              .MediaPlayer()
+                              .create()
+                              .initialize(video, video.src, false);
+                      },
+                      shaka: (video, player) => {
+                          if (shaka.Player.isBrowserSupported()) {
+                              new shaka.Player(video)
+                                  .load(video.src)
+                                  .then(() => {})
+                                  .catch((e) => console.error(e));
+                          } else {
+                              console.error("Error: Shaka is not supported.");
+                          }
+                      },
+                  },
+              }
+            : { quality: qualitySwitching, defaultQuality: 0 },
+    });
 };
 
 const loadScript = async (extension) => {
+    if (extension.loaded) {
+        return;
+    }
+
     await load.js(extension.url);
 
     extension.loaded = true;
@@ -91,7 +92,7 @@ const loadExtensions = () => {
                 `embedVideo${ex.attributeName}`
             );
 
-            if (isExtensionEnabled && !ex.loaded) {
+            if (isExtensionEnabled) {
                 loadScript(ex);
             }
         });
@@ -102,11 +103,7 @@ const loadExtensions = () => {
 
 const loadPlayer = () => {
     return new Promise((resolve) => {
-        if (playerData.loaded) {
-            resolve();
-        } else {
-            loadScript(playerData).then(() => resolve());
-        }
+        loadScript(playerData).then(() => resolve());
     });
 };
 
@@ -139,13 +136,46 @@ app.initializers.add("nearata-embed-video", () => {
         );
     });
 
-    extend(CommentPost.prototype, "oncreate", function () {
+    extend(CommentPost.prototype, "refreshContent", function () {
         const containers = this.element.querySelectorAll(".dplayer-container");
 
         if (containers.length) {
-            Promise.all([loadExtensions(), loadPlayer()]).then((_) =>
-                loadPlayers(containers)
-            );
+            Promise.all([loadExtensions(), loadPlayer()]).then((_) => {
+                for (const i of containers) {
+                    createInstance(i);
+                }
+            });
         }
+    });
+
+    extend(ComposerPostPreview.prototype, "oncreate", function () {
+        const updatePreview = () => {
+            if (!this.attrs.composer.isVisible()) {
+                return;
+            }
+
+            const containers =
+                this.element.querySelectorAll(".dplayer-container");
+
+            if (containers.length) {
+                Promise.all([loadExtensions(), loadPlayer()]).then((_) => {
+                    for (const i of containers) {
+                        if (i.children.length) {
+                            continue;
+                        }
+
+                        createInstance(i);
+                    }
+                });
+            }
+        };
+
+        updatePreview();
+
+        this.updateInterval2 = setInterval(updatePreview, 50);
+    });
+
+    extend(ComposerPostPreview.prototype, "onremove", function () {
+        clearInterval(this.updateInterval2);
     });
 });

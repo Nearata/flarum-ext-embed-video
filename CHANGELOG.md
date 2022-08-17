@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Add missing translations
+- Add missing translations.
+- Now the player will load/update while editing a post.
 
 ## [3.1.1] - 2022-08-04
 

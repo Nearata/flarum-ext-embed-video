@@ -3,6 +3,7 @@ import Button from "flarum/common/components/Button";
 import Modal from "flarum/common/components/Modal";
 import Select from "flarum/common/components/Select";
 import Switch from "flarum/common/components/Switch";
+import app from "flarum/forum/app";
 
 const trans = (key) => {
     return app.translator.trans(`nearata-embed-video.forum.modal.${key}`);
