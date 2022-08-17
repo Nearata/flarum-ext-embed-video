@@ -107,6 +107,10 @@ const loadPlayer = () => {
     });
 };
 
+const init = () => {
+    return Promise.all([loadExtensions(), loadPlayer()]);
+};
+
 app.initializers.add("nearata-embed-video", () => {
     extend(TextEditor.prototype, "controlItems", function (items) {
         if (!app.forum.attribute("embedVideoCreate")) {
@@ -140,7 +144,7 @@ app.initializers.add("nearata-embed-video", () => {
         const containers = this.element.querySelectorAll(".dplayer-container");
 
         if (containers.length) {
-            Promise.all([loadExtensions(), loadPlayer()]).then((_) => {
+            init().then((_) => {
                 for (const i of containers) {
                     createInstance(i);
                 }
@@ -149,16 +153,26 @@ app.initializers.add("nearata-embed-video", () => {
     });
 
     extend(ComposerPostPreview.prototype, "oncreate", function () {
+        let preview;
+
         const updatePreview = () => {
             if (!this.attrs.composer.isVisible()) {
                 return;
             }
 
+            const content = this.attrs.composer.fields.content();
+
+            if (preview === content) {
+                return;
+            }
+
+            preview = content;
+
             const containers =
                 this.element.querySelectorAll(".dplayer-container");
 
             if (containers.length) {
-                Promise.all([loadExtensions(), loadPlayer()]).then((_) => {
+                init().then((_) => {
                     for (const i of containers) {
                         if (i.children.length) {
                             continue;
