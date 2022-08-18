@@ -146,6 +146,10 @@ app.initializers.add("nearata-embed-video", () => {
         if (containers.length) {
             init().then((_) => {
                 for (const i of containers) {
+                    if (i.children.length) {
+                        continue;
+                    }
+
                     createInstance(i);
                 }
             });

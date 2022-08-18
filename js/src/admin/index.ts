@@ -94,6 +94,7 @@ app.initializers.add("nearata-embed-video", (app) => {
                     "nearata-embed-video.admin.settings.permissions.can_create_video_player"
                 ),
                 permission: "nearata.embedvideo.create",
+                // @ts-ignore
                 tagScoped: true,
             },
             "start",
