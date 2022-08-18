@@ -85,26 +85,18 @@ const loadScript = async (extension) => {
     extension.loaded = true;
 };
 
-const loadExtensions = () => {
-    return new Promise((resolve) => {
-        extensions.forEach((ex) => {
-            const isExtensionEnabled = app.forum.attribute(
-                `embedVideo${ex.attributeName}`
-            );
+const loadExtensions = async () => {
+    for (const i of extensions) {
+        const isExtensionEnabled = app.forum.attribute(i.attributeName);
 
-            if (isExtensionEnabled) {
-                loadScript(ex);
-            }
-        });
-
-        resolve();
-    });
+        if (isExtensionEnabled) {
+            await loadScript(i);
+        }
+    }
 };
 
-const loadPlayer = () => {
-    return new Promise((resolve) => {
-        loadScript(playerData).then(() => resolve());
-    });
+const loadPlayer = async () => {
+    return await loadScript(playerData);
 };
 
 const init = () => {
