@@ -97,7 +97,19 @@ app.initializers.add("nearata-embed-video", (app) => {
                 // @ts-ignore
                 tagScoped: true,
             },
-            "start",
-            95
+            "start"
+        )
+        .registerPermission(
+            {
+                icon: "fas fa-tag",
+                label: app.translator.trans(
+                    "nearata-embed-video.admin.settings.permissions.can_view_video_player"
+                ),
+                permission: "nearata.embedvideo.view",
+                allowGuest: true,
+                // @ts-ignore
+                tagScoped: true,
+            },
+            "view"
         );
 });

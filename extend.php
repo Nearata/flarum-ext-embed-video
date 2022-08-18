@@ -2,10 +2,11 @@
 
 namespace Nearata\EmbedVideo;
 
+use Flarum\Api\Serializer\BasicPostSerializer;
 use Flarum\Extend;
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Post\Event\Saving;
-
+use Flarum\Post\Post;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -57,5 +58,26 @@ return [
         }),
 
     (new Extend\ApiSerializer(ForumSerializer::class))
-        ->attributes(ForumSettings::class)
+        ->attributes(ForumSettings::class),
+
+    (new Extend\ApiSerializer(BasicPostSerializer::class))
+        ->attributes(function (BasicPostSerializer $serializer, Post $post, array $attributes) {
+            if (!Str::contains($post->content, ["[embed-video"])) {
+                return $attributes;
+            }
+
+            if (!$serializer->getActor()->can("nearata.embedvideo.view")) {
+                $attributes["nearataEmbedVideoCanView"] = false;
+
+                $post->content = preg_replace("/url=\".*?\"/", "url=\"\"", $post->content);
+
+                $attributes["contentHtml"] = $post->formatContent($this->request);
+
+                if (in_array("content", $attributes)) {
+                    $attributes["content"] = $post->content;
+                }
+            }
+
+            return $attributes;
+        })
 ];

@@ -10,6 +10,7 @@ nearata-embed-video:
         theme: Theme color
       permissions:
         can_create_video_player: Can create video player
+        can_view_video_player: Can view video player
       video_types:
         dash: Dash
         flv: Flv
@@ -33,3 +34,4 @@ nearata-embed-video:
       video_url_label: Video URL
       video_url_placeholder: Ex. https://example.com/filename.mp4
       quality_switching_tutorial: Quality Switching tutorial
+    cannot_view: "Error: You are not allowed to view this content"

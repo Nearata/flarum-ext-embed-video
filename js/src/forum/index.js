@@ -9,7 +9,7 @@ import CommentPost from "flarum/forum/components/CommentPost";
 import ComposerPostPreview from "flarum/forum/components/ComposerPostPreview";
 import TextEditor from "flarum/forum/components/TextEditor";
 
-const createInstance = (container) => {
+const createInstance = (container, canView) => {
     const videoUrl = container.dataset.url;
     const videoType = container.dataset.type;
     const liveMode = container.dataset.live;
@@ -40,7 +40,7 @@ const createInstance = (container) => {
         app.forum.attribute("embedVideoQualitySwitching") &&
         qualitySwitching.length > 0;
 
-    new DPlayer({
+    const dp = new DPlayer({
         container: container,
         live: liveMode === "true" ? true : false,
         theme: app.forum.attribute("embedVideoTheme") || "#b7daff",
@@ -48,6 +48,7 @@ const createInstance = (container) => {
         lang: app.forum.attribute("embedVideoLang") || "",
         airplay: app.forum.attribute("embedVideoAirplay") || false,
         hotkey: app.forum.attribute("embedVideoHotkey") || false,
+        error: "true",
         video: !isQualitySwitching
             ? {
                   url: videoUrl,
@@ -73,6 +74,13 @@ const createInstance = (container) => {
               }
             : { quality: qualitySwitching, defaultQuality: 0 },
     });
+
+    if (typeof canView !== "undefined") {
+        dp.notice(
+            app.translator.trans("nearata-embed-video.forum.cannot_view"),
+            0
+        );
+    }
 };
 
 const loadScript = async (extension) => {
@@ -134,6 +142,7 @@ app.initializers.add("nearata-embed-video", () => {
 
     extend(CommentPost.prototype, "refreshContent", function () {
         const containers = this.element.querySelectorAll(".dplayer-container");
+        const canView = this.attrs.post.attribute("nearataEmbedVideoCanView");
 
         if (containers.length) {
             init().then((_) => {
@@ -142,7 +151,7 @@ app.initializers.add("nearata-embed-video", () => {
                         continue;
                     }
 
-                    createInstance(i);
+                    createInstance(i, canView);
                 }
             });
         }
@@ -174,7 +183,7 @@ app.initializers.add("nearata-embed-video", () => {
                             continue;
                         }
 
-                        createInstance(i);
+                        createInstance(i, canView);
                     }
                 });
             }
