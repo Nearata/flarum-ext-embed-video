@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add missing translations.
 - Now the player will load/update while editing a post.
 - Ability to choose which groups can view the video players.
+- `php flarum nearataEmbedVideo:purge` to remove video players from posts.
 
 ## [3.1.1] - 2022-08-04
 
