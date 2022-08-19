@@ -1,13 +1,13 @@
 import EmbedVideoModal from "./components/EmbedVideoModal";
 import { playerData, extensions } from "./extensions";
 import load from "external-load";
+import Button from "flarum/common/components/Button";
+import TextEditor from "flarum/common/components/TextEditor";
 import Tooltip from "flarum/common/components/Tooltip";
 import { extend } from "flarum/common/extend";
 import app from "flarum/forum/app";
-import Button from "flarum/forum/components/Button";
 import CommentPost from "flarum/forum/components/CommentPost";
 import ComposerPostPreview from "flarum/forum/components/ComposerPostPreview";
-import TextEditor from "flarum/forum/components/TextEditor";
 
 const createInstance = (container, canView) => {
     const videoUrl = container.dataset.url;
