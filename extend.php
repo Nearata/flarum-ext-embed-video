@@ -45,7 +45,7 @@ return [
         }),
 
     (new Extend\Event)
-        ->listen(Saving::class, function($event) {
+        ->listen(Saving::class, function(Saving $event) {
             if (Arr::has($event->data, 'attributes.content')) {
                 $content = Arr::get($event->data, 'attributes.content');
 
