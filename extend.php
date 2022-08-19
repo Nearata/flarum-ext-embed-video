@@ -62,22 +62,29 @@ return [
 
     (new Extend\ApiSerializer(BasicPostSerializer::class))
         ->attributes(function (BasicPostSerializer $serializer, Post $post, array $attributes) {
-            if (!Str::contains($post->content, ["[embed-video"])) {
+            if ($post->type != 'comment') {
                 return $attributes;
             }
 
-            if (!$serializer->getActor()->can("nearata.embedvideo.view")) {
-                $attributes["nearataEmbedVideoCanView"] = false;
+            if (!Str::contains($post->content, ['[embed-video'])) {
+                return $attributes;
+            }
 
-                $post->content = preg_replace("/url=\".*?\"/", "url=\"\"", $post->content);
+            if (!$serializer->getActor()->can('nearata.embedvideo.view')) {
+                $attributes['nearataEmbedVideoCanView'] = false;
 
-                $attributes["contentHtml"] = $post->formatContent($this->request);
+                $post->content = preg_replace('/url=\'.*?\'/', 'url=\'\'', $post->content);
 
-                if (in_array("content", $attributes)) {
-                    $attributes["content"] = $post->content;
+                $attributes['contentHtml'] = $post->formatContent($this->request);
+
+                if (in_array('content', $attributes)) {
+                    $attributes['content'] = $post->content;
                 }
             }
 
             return $attributes;
-        })
+        }),
+
+    (new Extend\Console())
+        ->command(PurgeCommand::class)
 ];
