@@ -183,7 +183,7 @@ app.initializers.add("nearata-embed-video", () => {
                             continue;
                         }
 
-                        createInstance(i, canView);
+                        createInstance(i, undefined);
                     }
                 });
             }
