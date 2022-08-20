@@ -58,6 +58,7 @@ export default class EmbedVideoModal extends Modal {
                             options: this.videoOptions,
                             value: this.videoType,
                             onchange: (value) => (this.videoType = value),
+                            disabled: this.disabled,
                         }),
                     ]),
                     m(".Form-group", [
@@ -66,6 +67,7 @@ export default class EmbedVideoModal extends Modal {
                             {
                                 onchange: (value) => (this.isLive = value),
                                 state: this.isLive,
+                                disabled: this.disabled,
                             },
                             trans("live_mode")
                         ),
@@ -91,6 +93,7 @@ export default class EmbedVideoModal extends Modal {
                                     "Button Button--primary Button--block",
                                 type: "submit",
                                 loading: this.loading,
+                                disabled: this.disabled,
                             },
                             trans("submit_button")
                         ),
@@ -116,10 +119,12 @@ export default class EmbedVideoModal extends Modal {
     onsubmit(e) {
         e.preventDefault();
 
-        const playerUUID = window.crypto.getRandomValues(new Uint16Array(1))[0];
+        this.disabled = true;
+
+        const id = window.crypto.getRandomValues(new Uint16Array(1))[0];
 
         this.attrs.editor.insertAtCursor(
-            `[embed-video id="${playerUUID}" url="${this.videoUrl}" type="${this.videoType}" live="${this.isLive}"]`
+            `[embed-video id="${id}" url="${this.videoUrl}" type="${this.videoType}" live="${this.isLive}"]`
         );
         this.hide();
     }
