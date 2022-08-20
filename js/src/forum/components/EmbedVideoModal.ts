@@ -1,16 +1,28 @@
 import { extensions } from "../extensions";
 import Button from "flarum/common/components/Button";
-import Modal from "flarum/common/components/Modal";
+import Modal, { IInternalModalAttrs } from "flarum/common/components/Modal";
 import Select from "flarum/common/components/Select";
 import Switch from "flarum/common/components/Switch";
+import BasicEditorDriver from "flarum/common/utils/BasicEditorDriver";
 import app from "flarum/forum/app";
 
-const trans = (key) => {
+const trans = (key: string) => {
     return app.translator.trans(`nearata-embed-video.forum.modal.${key}`);
 };
 
-export default class EmbedVideoModal extends Modal {
-    oninit(vnode) {
+interface Attrs extends IInternalModalAttrs {
+    editor: BasicEditorDriver;
+}
+
+export default class EmbedVideoModal extends Modal<Attrs> {
+    videoUrl!: string;
+    videoType!: string;
+    isLive!: boolean;
+    videoOptions!: any;
+    disabled!: boolean;
+    editor!: BasicEditorDriver;
+
+    oninit(vnode: any) {
         super.oninit(vnode);
 
         this.videoUrl = "";
@@ -19,11 +31,12 @@ export default class EmbedVideoModal extends Modal {
         this.videoOptions = {
             normal: trans("video_types.normal"),
         };
+        this.editor = this.attrs.editor;
 
-        extensions.forEach((ex) => {
-            if (app.forum.attribute(`embedVideo${ex.attributeName}`)) {
-                const exName = ex.attributeName.toLowerCase();
-                this.videoOptions[exName] = trans(`video_types.${exName}`);
+        extensions.forEach((i) => {
+            if (app.forum.attribute(`embedVideo${i.attributeName}`)) {
+                const name = i.attributeName.toLowerCase();
+                this.videoOptions[name] = trans(`video_types.${name}`);
             }
         });
     }
@@ -47,7 +60,8 @@ export default class EmbedVideoModal extends Modal {
                             name: "url",
                             class: "FormControl",
                             disabled: this.disabled,
-                            oninput: (e) => (this.videoUrl = e.target.value),
+                            oninput: (e: any) =>
+                                (this.videoUrl = e.target.value),
                             autocomplete: "off",
                             placeholder: trans("video_url_placeholder"),
                         }),
@@ -57,7 +71,8 @@ export default class EmbedVideoModal extends Modal {
                         m(Select, {
                             options: this.videoOptions,
                             value: this.videoType,
-                            onchange: (value) => (this.videoType = value),
+                            onchange: (value: string) =>
+                                (this.videoType = value),
                             disabled: this.disabled,
                         }),
                     ]),
@@ -65,7 +80,8 @@ export default class EmbedVideoModal extends Modal {
                         m(
                             Switch,
                             {
-                                onchange: (value) => (this.isLive = value),
+                                onchange: (value: boolean) =>
+                                    (this.isLive = value),
                                 state: this.isLive,
                                 disabled: this.disabled,
                             },
@@ -116,14 +132,14 @@ export default class EmbedVideoModal extends Modal {
         ];
     }
 
-    onsubmit(e) {
+    onsubmit(e: any) {
         e.preventDefault();
 
         this.disabled = true;
 
         const id = window.crypto.getRandomValues(new Uint16Array(1))[0];
 
-        this.attrs.editor.insertAtCursor(
+        this.editor.insertAtCursor(
             `[embed-video id="${id}" url="${this.videoUrl}" type="${this.videoType}" live="${this.isLive}"]`
         );
         this.hide();

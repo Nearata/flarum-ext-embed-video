@@ -9,7 +9,10 @@ import app from "flarum/forum/app";
 import CommentPost from "flarum/forum/components/CommentPost";
 import ComposerPostPreview from "flarum/forum/components/ComposerPostPreview";
 
-const createInstance = (container, canView) => {
+const createInstance = (
+    container: HTMLElement,
+    canView: boolean | undefined
+) => {
     const videoUrl = container.dataset.url;
     const videoType = container.dataset.type;
     const liveMode = container.dataset.live;
@@ -40,6 +43,7 @@ const createInstance = (container, canView) => {
         app.forum.attribute("embedVideoQualitySwitching") &&
         qualitySwitching.length > 0;
 
+    // @ts-ignore
     const dp = new DPlayer({
         container: container,
         live: liveMode === "true" ? true : false,
@@ -54,18 +58,18 @@ const createInstance = (container, canView) => {
                   url: videoUrl,
                   type: videoType,
                   customType: {
-                      dash: (video, player) => {
+                      dash: (video: any, player: any) => {
                           window.dashjs
                               .MediaPlayer()
                               .create()
                               .initialize(video, video.src, false);
                       },
-                      shaka: (video, player) => {
+                      shaka: (video: any, player: any) => {
                           if (shaka.Player.isBrowserSupported()) {
                               new shaka.Player(video)
                                   .load(video.src)
                                   .then(() => {})
-                                  .catch((e) => console.error(e));
+                                  .catch((e: any) => console.error(e));
                           } else {
                               console.error("Error: Shaka is not supported.");
                           }
@@ -83,7 +87,7 @@ const createInstance = (container, canView) => {
     }
 };
 
-const loadScript = async (extension) => {
+const loadScript = async (extension: any) => {
     if (extension.loaded) {
         return;
     }
@@ -142,7 +146,9 @@ app.initializers.add("nearata-embed-video", () => {
 
     extend(CommentPost.prototype, "refreshContent", function () {
         const containers = this.element.querySelectorAll(".dplayer-container");
-        const canView = this.attrs.post.attribute("nearataEmbedVideoCanView");
+        const canView: boolean | undefined = this.attrs.post.attribute(
+            "nearataEmbedVideoCanView"
+        );
 
         if (containers.length) {
             init().then((_) => {
