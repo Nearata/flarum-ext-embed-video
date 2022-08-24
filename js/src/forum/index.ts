@@ -31,6 +31,11 @@ const createInstance = (
 
         qualities.split(",").forEach((q) => {
             const qData = q.split(";");
+
+            if (qData.length < 2) {
+                return;
+            }
+
             qualitySwitching.push({
                 name: qData[0],
                 url: qData[1],
@@ -52,9 +57,9 @@ const createInstance = (
         lang: app.forum.attribute("embedVideoLang") || "",
         airplay: app.forum.attribute("embedVideoAirplay") || false,
         hotkey: app.forum.attribute("embedVideoHotkey") || false,
-        error: "true",
-        video: !isQualitySwitching
-            ? {
+        video: isQualitySwitching
+            ? { quality: qualitySwitching, defaultQuality: 0 }
+            : {
                   url: videoUrl,
                   type: videoType,
                   customType: {
@@ -75,8 +80,7 @@ const createInstance = (
                           }
                       },
                   },
-              }
-            : { quality: qualitySwitching, defaultQuality: 0 },
+              },
     });
 
     if (typeof canView !== "undefined") {
