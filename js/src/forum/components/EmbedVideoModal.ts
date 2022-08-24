@@ -1,7 +1,6 @@
 import { extensions } from "../extensions";
 import PointerState from "../states/PointerState";
 import QualityState from "../states/QualityState";
-import escapeStringRegexp from "escape-string-regexp";
 import Button from "flarum/common/components/Button";
 import Modal, { IInternalModalAttrs } from "flarum/common/components/Modal";
 import Select from "flarum/common/components/Select";

@@ -140,8 +140,13 @@ app.initializers.add("nearata-embed-video", () => {
                     m(Button, {
                         icon: "fas fa-cat",
                         class: "Button Button--icon",
-                        onclick: () =>
-                            app.modal.show(EmbedVideoModal, { editor: editor }),
+                        onclick: () => {
+                            if (app.forum.attribute("embedVideoModal")) {
+                                app.modal.show(EmbedVideoModal, { editor: editor })
+                            } else {
+                                editor.insertAtCursor(`[embed-video id="${window.crypto.randomUUID()}" url="" type="normal" live="false" qualities=""]`)
+                            }
+                        }
                     }),
                 ]
             )

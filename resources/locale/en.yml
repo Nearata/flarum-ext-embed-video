@@ -8,6 +8,8 @@ nearata-embed-video:
         logo: Logo URL
         quality_switching: Quality Switching
         theme: Theme color
+        modal_enabled: Modal Enabled
+        modal_enabled_help: Enable the modal or just insert the BBCode inside the composer.
       permissions:
         can_create_video_player: Can create video player
         can_view_video_player: Can view video player

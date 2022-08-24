@@ -28,7 +28,8 @@ class ForumSettings
             'embedVideoQualitySwitching' => (bool) $this->settings->get('nearata-embed-video.admin.settings.options.quality_switching'),
             'embedVideoTheme' => (string) $this->settings->get('nearata-embed-video.admin.settings.options.theme'),
             'embedVideoLogo' => (string) $this->settings->get('nearata-embed-video.admin.settings.options.logo'),
-            'embedVideoLang' => (string) $this->settings->get('nearata-embed-video.admin.settings.options.lang')
+            'embedVideoLang' => (string) $this->settings->get('nearata-embed-video.admin.settings.options.lang'),
+            'embedVideoModal' => (bool) $this->settings->get('nearata-embed-video.admin.settings.options.modal_enabled')
         ];
     }
 }

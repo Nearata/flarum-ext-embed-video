@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "escape-string-regexp": "^5.0.0",
     "external-load": "^1.0.0",
     "flarum-webpack-config": "^2.0.0",
     "webpack": "^5.72.0",
