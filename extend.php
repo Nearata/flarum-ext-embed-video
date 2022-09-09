@@ -26,14 +26,14 @@ return [
         ->configure(function (Configurator $config) {
             $config->BBCodes->addCustom(
                 '[embed-video
-                    id="{NUMBER}"
+                    id="{TEXT}"
                     url="{ANYTHING}"
                     type="{TEXT2}"
                     live="{TEXT3}"
                     qualities="{ANYTHING2;optional}"
                 ]',
                 '<div
-                    id="player-{NUMBER}"
+                    id="player-{TEXT}"
                     class="dplayer-container"
                     data-url="{ANYTHING}"
                     data-type="{TEXT2}"
