@@ -1,12 +1,12 @@
 export const playerData = {
-  url: "https://cdnjs.cloudflare.com/ajax/libs/dplayer/1.26.0/DPlayer.min.js",
+  url: "https://cdnjs.cloudflare.com/ajax/libs/dplayer/1.27.1/DPlayer.min.js",
   loaded: false,
 };
 
 export const extensions = [
   {
     attributeName: "embedVideoDash",
-    url: "https://cdnjs.cloudflare.com/ajax/libs/dashjs/4.4.1/dash.all.min.js",
+    url: "https://cdnjs.cloudflare.com/ajax/libs/dashjs/4.7.0/dash.all.min.js",
     loaded: false,
   },
   {
@@ -16,22 +16,22 @@ export const extensions = [
   },
   {
     attributeName: "embedVideoHls",
-    url: "https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.2.0/hls.min.js",
+    url: "https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.4.3/hls.min.js",
     loaded: false,
   },
   {
     attributeName: "embedVideoShaka",
-    url: "https://cdnjs.cloudflare.com/ajax/libs/mux.js/6.2.0/mux.min.js",
+    url: "https://cdnjs.cloudflare.com/ajax/libs/mux.js/6.3.0/mux.min.js",
     loaded: false,
   },
   {
     attributeName: "embedVideoShaka",
-    url: "https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.1.2/shaka-player.compiled.js",
+    url: "https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.6/shaka-player.compiled.js",
     loaded: false,
   },
   {
     attributeName: "embedVideoWebTorrent",
-    url: "https://cdnjs.cloudflare.com/ajax/libs/webtorrent/1.8.26/webtorrent.min.js",
+    url: "https://cdnjs.cloudflare.com/ajax/libs/webtorrent/1.9.7/webtorrent.min.js",
     loaded: false,
   },
 ];
