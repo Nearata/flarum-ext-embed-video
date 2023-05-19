@@ -1,11 +1,11 @@
 export default class QualityState {
-    name: string;
-    url: string;
-    type: string;
+  name: string;
+  url: string;
+  type: string;
 
-    constructor() {
-        this.name = "";
-        this.url = "";
-        this.type = "normal";
-    }
+  constructor() {
+    this.name = "";
+    this.url = "";
+    this.type = "normal";
+  }
 }
