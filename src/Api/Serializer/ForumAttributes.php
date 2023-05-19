@@ -1,12 +1,15 @@
 <?php
 
-namespace Nearata\EmbedVideo;
+namespace Nearata\EmbedVideo\Api\Serializer;
 
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Settings\SettingsRepositoryInterface;
 
-class ForumSettings
+class ForumAttributes
 {
+    /**
+     * @var SettingsRepositoryInterface
+     */
     protected $settings;
 
     public function __construct(SettingsRepositoryInterface $settings)

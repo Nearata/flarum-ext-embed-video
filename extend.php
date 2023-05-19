@@ -5,6 +5,8 @@ namespace Nearata\EmbedVideo;
 use Flarum\Extend;
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Post\Event\Saving;
+use Nearata\EmbedVideo\Api\Serializer\ForumAttributes;
+use Nearata\EmbedVideo\Command\PurgeCommand;
 use Nearata\EmbedVideo\Formatter;
 use Nearata\EmbedVideo\Post\Listener\SavingListener;
 
@@ -26,7 +28,7 @@ return [
         ->listen(Saving::class, SavingListener::class),
 
     (new Extend\ApiSerializer(ForumSerializer::class))
-        ->attributes(ForumSettings::class),
+        ->attributes(ForumAttributes::class),
 
     (new Extend\Console())
         ->command(PurgeCommand::class)

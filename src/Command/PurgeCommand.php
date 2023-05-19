@@ -1,6 +1,6 @@
 <?php
 
-namespace Nearata\EmbedVideo;
+namespace Nearata\EmbedVideo\Command;
 
 use Flarum\Console\AbstractCommand;
 use Flarum\Post\Post;
