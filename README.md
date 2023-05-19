@@ -1,11 +1,19 @@
 # Embed Video
 
-> A [Flarum](https://flarum.org) extension that allow users to embed video using BBCode.
+> Allow users to embed video using BBCode.
 
 ## Install
 
 ```sh
-composer require nearata/flarum-ext-embed-video
+composer require nearata/flarum-ext-embed-video:"*"
+```
+
+## Update
+
+```sh
+composer require nearata/flarum-ext-embed-video:"*"
+php flarum migrate
+php flarum cache:clear
 ```
 
 ## Remove

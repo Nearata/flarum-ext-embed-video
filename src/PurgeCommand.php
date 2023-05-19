@@ -24,7 +24,7 @@ class PurgeCommand extends AbstractCommand
                 return true;
             }
 
-            if (!Str::contains($item->content, '[embed-video')) {
+            if (! Str::contains($item->content, '[embed-video')) {
                 return true;
             }
 
