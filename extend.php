@@ -31,5 +31,19 @@ return [
         ->attributes(ForumAttributes::class),
 
     (new Extend\Console())
-        ->command(PurgeCommand::class)
+        ->command(PurgeCommand::class),
+
+    (new Extend\Settings)
+        ->default('nearata-embed-video.admin.settings.video_type.dash', false)
+        ->default('nearata-embed-video.admin.settings.video_type.flv', false)
+        ->default('nearata-embed-video.admin.settings.video_type.hls', false)
+        ->default('nearata-embed-video.admin.settings.video_type.shaka', false)
+        ->default('nearata-embed-video.admin.settings.video_type.webtorrent', false)
+        ->default('nearata-embed-video.admin.settings.options.airplay', false)
+        ->default('nearata-embed-video.admin.settings.options.hotkey', false)
+        ->default('nearata-embed-video.admin.settings.options.quality_switching', false)
+        ->default('nearata-embed-video.admin.settings.options.theme', '')
+        ->default('nearata-embed-video.admin.settings.options.logo', '')
+        ->default('nearata-embed-video.admin.settings.options.lang', 'en')
+        ->default('nearata-embed-video.admin.settings.options.modal_enabled', false)
 ];

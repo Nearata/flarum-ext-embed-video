@@ -1,6 +1,6 @@
 import app from "flarum/admin/app";
 
-app.initializers.add("nearata-embed-video", (app) => {
+app.initializers.add("nearata-embed-video", () => {
   app.extensionData
     .for("nearata-embed-video")
     .registerSetting({
@@ -103,7 +103,7 @@ app.initializers.add("nearata-embed-video", (app) => {
           "nearata-embed-video.admin.settings.permissions.can_create_video_player"
         ),
         permission: "nearata.embedvideo.create",
-        // @ts-ignore
+        // @ts-expect-error
         tagScoped: true,
       },
       "start"
@@ -116,7 +116,7 @@ app.initializers.add("nearata-embed-video", (app) => {
         ),
         permission: "nearata.embedvideo.view",
         allowGuest: true,
-        // @ts-ignore
+        // @ts-expect-error
         tagScoped: true,
       },
       "view"
