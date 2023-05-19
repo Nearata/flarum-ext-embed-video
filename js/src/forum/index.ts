@@ -142,11 +142,15 @@ app.initializers.add("nearata-embed-video", () => {
                         class: "Button Button--icon",
                         onclick: () => {
                             if (app.forum.attribute("embedVideoModal")) {
-                                app.modal.show(EmbedVideoModal, { editor: editor })
+                                app.modal.show(EmbedVideoModal, {
+                                    editor: editor,
+                                });
                             } else {
-                                editor.insertAtCursor(`[embed-video id="${window.crypto.randomUUID()}" url="" type="normal" live="false" qualities=""]`)
+                                editor.insertAtCursor(
+                                    `[embed-video id="${window.crypto.randomUUID()}" url="" type="normal" live="false" qualities=""]`
+                                );
                             }
-                        }
+                        },
                     }),
                 ]
             )
