@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - update dependencies
 - php: improved embed-video bbcode detection
 - fix: tag-scoped permissions
+- js: removed broken modal
 
 ## [3.2.1] - 2022-09-09
 

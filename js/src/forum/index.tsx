@@ -1,4 +1,3 @@
-import EmbedVideoModal from "./components/EmbedVideoModal";
 import { playerData, extensions } from "./extensions";
 import load from "external-load";
 import Button from "flarum/common/components/Button";
@@ -123,35 +122,23 @@ app.initializers.add("nearata-embed-video", () => {
       return;
     }
 
-    const editor = this.attrs.composer.editor;
+    const text = app.translator.trans(
+      "nearata-embed-video.forum.button_tooltip_title"
+    );
 
     items.add(
       "nearataEmbedVideo",
-      m(
-        Tooltip,
-        {
-          text: app.translator.trans(
-            "nearata-embed-video.forum.button_tooltip_title"
-          ),
-        },
-        [
-          m(Button, {
-            icon: "fas fa-cat",
-            class: "Button Button--icon",
-            onclick: () => {
-              if (app.forum.attribute("embedVideoModal")) {
-                app.modal.show(EmbedVideoModal, {
-                  editor: editor,
-                });
-              } else {
-                editor.insertAtCursor(
-                  `[embed-video id="${window.crypto.randomUUID()}" url="" type="normal" live="false" qualities=""]`
-                );
-              }
-            },
-          }),
-        ]
-      )
+      <Tooltip text={text}>
+        <Button
+          icon="fas fa-cat"
+          class="Button Button--icon"
+          onclick={() => {
+            this.attrs.composer.editor.insertAtCursor(
+              `[embed-video id="${window.crypto.randomUUID()}" url="" type="normal" live="false" qualities=""]`
+            );
+          }}
+        />
+      </Tooltip>
     );
   });
 
