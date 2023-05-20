@@ -1,5 +1,4 @@
-import { playerData, extensions } from "./extensions";
-import load from "external-load";
+import PlayerState from "./states/PlayerState";
 import Button from "flarum/common/components/Button";
 import TextEditor from "flarum/common/components/TextEditor";
 import Tooltip from "flarum/common/components/Tooltip";
@@ -8,117 +7,21 @@ import app from "flarum/forum/app";
 import CommentPost from "flarum/forum/components/CommentPost";
 import ComposerPostPreview from "flarum/forum/components/ComposerPostPreview";
 
-const createInstance = (container: HTMLElement, canView: boolean) => {
-  const videoUrl = container.dataset.url;
-  const videoType = container.dataset.type;
-  const liveMode = container.dataset.live;
-  const qualities = container.dataset.qualities;
-
-  let qualitySwitching = [];
-
-  if (qualities) {
-    if (videoUrl) {
-      qualitySwitching.push({
-        name: "default",
-        url: videoUrl,
-        type: videoType,
-      });
-    }
-
-    qualities.split(",").forEach((q) => {
-      const qData = q.split(";");
-
-      if (qData.length < 2) {
-        return;
-      }
-
-      qualitySwitching.push({
-        name: qData[0],
-        url: qData[1],
-        type: qData.length < 3 ? "auto" : qData[2],
-      });
-    });
-  }
-
-  const isQualitySwitching =
-    app.forum.attribute("embedVideoQualitySwitching") &&
-    qualitySwitching.length > 0;
-
-  // @ts-ignore
-  const dp = new DPlayer({
-    container: container,
-    live: liveMode === "true" ? true : false,
-    theme: app.forum.attribute("embedVideoTheme") || "#b7daff",
-    logo: app.forum.attribute("embedVideoLogo") || "",
-    lang: app.forum.attribute("embedVideoLang") || "",
-    airplay: app.forum.attribute("embedVideoAirplay") || false,
-    hotkey: app.forum.attribute("embedVideoHotkey") || false,
-    video: isQualitySwitching
-      ? { quality: qualitySwitching, defaultQuality: 0 }
-      : {
-          url: videoUrl,
-          type: videoType,
-          customType: {
-            dash: (video: any, player: any) => {
-              window.dashjs
-                .MediaPlayer()
-                .create()
-                .initialize(video, video.src, false);
-            },
-            shaka: (video: any, player: any) => {
-              if (shaka.Player.isBrowserSupported()) {
-                new shaka.Player(video)
-                  .load(video.src)
-                  .then(() => {})
-                  .catch((e: any) => console.error(e));
-              } else {
-                console.error("Error: Shaka is not supported.");
-              }
-            },
-          },
-        },
-  });
-
-  if (!canView) {
-    dp.notice(app.translator.trans("nearata-embed-video.forum.cannot_view"), 0);
-  }
-};
-
-const loadScript = async (extension: any) => {
-  if (extension.loaded) {
-    return;
-  }
-
-  await load.js(extension.url);
-
-  extension.loaded = true;
-};
-
-const loadExtensions = async () => {
-  for (const i of extensions) {
-    const isExtensionEnabled = app.forum.attribute(i.attributeName);
-
-    if (isExtensionEnabled) {
-      await loadScript(i);
-    }
-  }
-};
-
-const loadPlayer = async () => {
-  return await loadScript(playerData);
-};
-
-const init = () => {
-  return Promise.all([loadExtensions(), loadPlayer()]);
-};
-
 app.initializers.add("nearata-embed-video", () => {
+  app.nearataEmbedVideoState = (async () => {
+    const state = new PlayerState();
+
+    await state.loadExtensions();
+
+    return state;
+  })();
+
   extend(TextEditor.prototype, "controlItems", function (items) {
-    if (
-      !app.current
-        .get("stream")
-        ?.discussion.attribute("canNearataEmbedVideoCreate")
-    ) {
+    const canCreate = app.current
+      .get("stream")
+      ?.discussion.attribute("canNearataEmbedVideoCreate");
+
+    if (!canCreate) {
       return;
     }
 
@@ -143,26 +46,17 @@ app.initializers.add("nearata-embed-video", () => {
   });
 
   extend(CommentPost.prototype, "refreshContent", function () {
-    const containers = this.element.querySelectorAll(".dplayer-container");
     const canView: boolean = this.attrs.post
       .discussion()
       .attribute("canNearataEmbedVideoView");
 
-    if (containers.length) {
-      init().then((_) => {
-        for (const i of containers) {
-          if (i.children.length) {
-            continue;
-          }
-
-          createInstance(i, canView);
-        }
-      });
-    }
+    app.nearataEmbedVideoState.then((a: PlayerState) =>
+      a.render(this.element, canView)
+    );
   });
 
   extend(ComposerPostPreview.prototype, "oncreate", function () {
-    let preview;
+    let preview = "";
 
     const updatePreview = () => {
       if (!this.attrs.composer.isVisible()) {
@@ -177,19 +71,9 @@ app.initializers.add("nearata-embed-video", () => {
 
       preview = content;
 
-      const containers = this.element.querySelectorAll(".dplayer-container");
-
-      if (containers.length) {
-        init().then((_) => {
-          for (const i of containers) {
-            if (i.children.length) {
-              continue;
-            }
-
-            createInstance(i, undefined);
-          }
-        });
-      }
+      app.nearataEmbedVideoState.then((a: PlayerState) =>
+        a.render(this.element, true)
+      );
     };
 
     updatePreview();

@@ -86,16 +86,6 @@ app.initializers.add("nearata-embed-video", () => {
       ),
       type: "boolean",
     })
-    .registerSetting({
-      setting: "nearata-embed-video.admin.settings.options.modal_enabled",
-      label: app.translator.trans(
-        "nearata-embed-video.admin.settings.options.modal_enabled"
-      ),
-      type: "boolean",
-      help: app.translator.trans(
-        "nearata-embed-video.admin.settings.options.modal_enabled_help"
-      ),
-    })
     .registerPermission(
       {
         icon: "fas fa-tag",

@@ -1,9 +1,9 @@
-export const playerData = {
-  url: "https://cdnjs.cloudflare.com/ajax/libs/dplayer/1.27.1/DPlayer.min.js",
-  loaded: false,
-};
-
 export const extensions = [
+  {
+    attributeName: null,
+    url: "https://cdnjs.cloudflare.com/ajax/libs/dplayer/1.27.1/DPlayer.min.js",
+    loaded: false,
+  },
   {
     attributeName: "embedVideoDash",
     url: "https://cdnjs.cloudflare.com/ajax/libs/dashjs/4.7.0/dash.all.min.js",
