@@ -2,9 +2,11 @@
 
 namespace Nearata\EmbedVideo;
 
+use Flarum\Api\Serializer\DiscussionSerializer;
 use Flarum\Extend;
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Post\Event\Saving;
+use Nearata\EmbedVideo\Api\Serializer\DiscussionSerializerAttributes;
 use Nearata\EmbedVideo\Api\Serializer\ForumAttributes;
 use Nearata\EmbedVideo\Command\PurgeCommand;
 use Nearata\EmbedVideo\Formatter;
@@ -29,6 +31,9 @@ return [
 
     (new Extend\ApiSerializer(ForumSerializer::class))
         ->attributes(ForumAttributes::class),
+
+    (new Extend\ApiSerializer(DiscussionSerializer::class))
+        ->attributes(DiscussionSerializerAttributes::class),
 
     (new Extend\Console())
         ->command(PurgeCommand::class),

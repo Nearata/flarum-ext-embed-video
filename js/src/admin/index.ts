@@ -102,9 +102,7 @@ app.initializers.add("nearata-embed-video", () => {
         label: app.translator.trans(
           "nearata-embed-video.admin.settings.permissions.can_create_video_player"
         ),
-        permission: "nearata.embedvideo.create",
-        // @ts-expect-error
-        tagScoped: true,
+        permission: "discussion.nearataEmbedVideoCreate",
       },
       "start"
     )
@@ -114,10 +112,8 @@ app.initializers.add("nearata-embed-video", () => {
         label: app.translator.trans(
           "nearata-embed-video.admin.settings.permissions.can_view_video_player"
         ),
-        permission: "nearata.embedvideo.view",
+        permission: "discussion.nearataEmbedVideoView",
         allowGuest: true,
-        // @ts-expect-error
-        tagScoped: true,
       },
       "view"
     );

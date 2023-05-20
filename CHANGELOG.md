@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - bump php to 8
 - bump flarum to 1.7
 - update dependencies
+- php: improved embed-video bbcode detection
+- fix: tag-scoped permissions
 
 ## [3.2.1] - 2022-09-09
 

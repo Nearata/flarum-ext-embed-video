@@ -23,7 +23,7 @@ class SavingListener
         $newContent = Utils::removeTag($event->post->parsed_content, 'EMBED-VIDEO');
 
         if (strlen($newContent) < strlen($oldContent)) {
-            $event->actor->assertCan('nearata.embedvideo.create');
+            $event->actor->assertCan('nearataEmbedVideoCreate', $event->post->discussion);
         }
     }
 }

@@ -20,7 +20,6 @@ class ForumAttributes
     public function __invoke(ForumSerializer $serializer): array
     {
         return [
-            'embedVideoCreate' => (bool) $serializer->getActor()->can('nearata.embedvideo.create'),
             'embedVideoDash' => (bool) $this->settings->get('nearata-embed-video.admin.settings.video_type.dash'),
             'embedVideoFlv' => (bool) $this->settings->get('nearata-embed-video.admin.settings.video_type.flv'),
             'embedVideoHls' => (bool) $this->settings->get('nearata-embed-video.admin.settings.video_type.hls'),

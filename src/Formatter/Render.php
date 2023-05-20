@@ -23,10 +23,14 @@ class Render
             return $xml;
         }
 
-        if ($actor->can('nearata.embedvideo.view')) {
+        if ($actor->can('nearataEmbedVideoView', $context->discussion)) {
             return $xml;
         }
 
-        return Utils::removeTag($xml, 'EMBED-VIDEO');
+        return Utils::replaceAttributes($xml, 'EMBED-VIDEO', function (array $attributes) {
+            $attributes['url'] = '';
+
+            return $attributes;
+        });
     }
 }

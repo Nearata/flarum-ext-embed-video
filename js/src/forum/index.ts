@@ -9,10 +9,7 @@ import app from "flarum/forum/app";
 import CommentPost from "flarum/forum/components/CommentPost";
 import ComposerPostPreview from "flarum/forum/components/ComposerPostPreview";
 
-const createInstance = (
-  container: HTMLElement,
-  canView: boolean | undefined
-) => {
+const createInstance = (container: HTMLElement, canView: boolean) => {
   const videoUrl = container.dataset.url;
   const videoType = container.dataset.type;
   const liveMode = container.dataset.live;
@@ -83,7 +80,7 @@ const createInstance = (
         },
   });
 
-  if (typeof canView !== "undefined") {
+  if (!canView) {
     dp.notice(app.translator.trans("nearata-embed-video.forum.cannot_view"), 0);
   }
 };
@@ -118,7 +115,11 @@ const init = () => {
 
 app.initializers.add("nearata-embed-video", () => {
   extend(TextEditor.prototype, "controlItems", function (items) {
-    if (!app.forum.attribute("embedVideoCreate")) {
+    if (
+      !app.current
+        .get("stream")
+        ?.discussion.attribute("canNearataEmbedVideoCreate")
+    ) {
       return;
     }
 
@@ -156,9 +157,9 @@ app.initializers.add("nearata-embed-video", () => {
 
   extend(CommentPost.prototype, "refreshContent", function () {
     const containers = this.element.querySelectorAll(".dplayer-container");
-    const canView: boolean | undefined = this.attrs.post.attribute(
-      "nearataEmbedVideoCanView"
-    );
+    const canView: boolean = this.attrs.post
+      .discussion()
+      .attribute("canNearataEmbedVideoView");
 
     if (containers.length) {
       init().then((_) => {
