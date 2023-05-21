@@ -7,7 +7,7 @@ use Flarum\Extend;
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Post\Event\Saving;
 use Nearata\EmbedVideo\Api\Serializer\DiscussionSerializerAttributes;
-use Nearata\EmbedVideo\Api\Serializer\ForumAttributes;
+use Nearata\EmbedVideo\Api\Serializer\ForumSerializerAttributes;
 use Nearata\EmbedVideo\Command\PurgeCommand;
 use Nearata\EmbedVideo\Formatter;
 use Nearata\EmbedVideo\Post\Listener\SavingListener;
@@ -30,7 +30,7 @@ return [
         ->listen(Saving::class, SavingListener::class),
 
     (new Extend\ApiSerializer(ForumSerializer::class))
-        ->attributes(ForumAttributes::class),
+        ->attributes(ForumSerializerAttributes::class),
 
     (new Extend\ApiSerializer(DiscussionSerializer::class))
         ->attributes(DiscussionSerializerAttributes::class),

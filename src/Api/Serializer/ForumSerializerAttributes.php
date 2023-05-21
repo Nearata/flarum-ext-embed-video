@@ -5,7 +5,7 @@ namespace Nearata\EmbedVideo\Api\Serializer;
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Settings\SettingsRepositoryInterface;
 
-class ForumAttributes
+class ForumSerializerAttributes
 {
     /**
      * @var SettingsRepositoryInterface
