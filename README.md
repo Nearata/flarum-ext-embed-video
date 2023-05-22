@@ -2,6 +2,10 @@
 
 > Allow users to embed video using BBCode.
 
+## Preview
+
+Look at the [screenshots](screenshots) subfolder.
+
 ## Install
 
 ```sh
@@ -12,7 +16,6 @@ composer require nearata/flarum-ext-embed-video:"*"
 
 ```sh
 composer require nearata/flarum-ext-embed-video:"*"
-php flarum migrate
 php flarum cache:clear
 ```
 
