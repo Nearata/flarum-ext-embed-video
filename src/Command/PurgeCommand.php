@@ -3,8 +3,10 @@
 namespace Nearata\EmbedVideo\Command;
 
 use Flarum\Console\AbstractCommand;
+use Flarum\Post\CommentPost;
 use Flarum\Post\Post;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Collection;
+use s9e\TextFormatter\Utils;
 
 class PurgeCommand extends AbstractCommand
 {
@@ -15,21 +17,19 @@ class PurgeCommand extends AbstractCommand
 
     protected function fire()
     {
-        Post::all()->each(function (Post $item) {
-            if ($item->type != 'comment') {
-                return true;
-            }
+        $this->info('Cleaning posts...');
 
-            if (is_null($item->content)) {
-                return true;
-            }
+        Post::chunk(50, function (Collection $items) {
+            foreach ($items as $i) {
+                if (! ($i instanceof CommentPost)) {
+                    continue;
+                }
 
-            if (! Str::contains($item->content, '[embed-video')) {
-                return true;
+                $i->parsed_content = Utils::removeTag($i->parsed_content, 'EMBED-VIDEO');
+                $i->save();
             }
-
-            $item->content = preg_replace('/\[embed-video\s.*?\]/i', '', $item->content);
-            $item->save();
         });
+
+        $this->info('Operation complete...');
     }
 }

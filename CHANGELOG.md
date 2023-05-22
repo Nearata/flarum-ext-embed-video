@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - fix: tag-scoped permissions
 - js: removed broken modal
 - js: refactoring
+- fix: purge command
 
 ## [3.2.1] - 2022-09-09
 

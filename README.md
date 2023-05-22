@@ -18,6 +18,17 @@ php flarum cache:clear
 
 ## Remove
 
+Rember to call the `Purge` button in Admin area.
+
+If you are about to unistall this extension for good,
+run this command before.
+
+This command will remove __ALL__ the video player found in user posts.
+
+```sh
+php flarum nearataEmbedVideo:purge
+```
+
 ```sh
 composer remove nearata/flarum-ext-embed-video
 php flarum cache:clear
