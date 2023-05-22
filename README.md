@@ -18,7 +18,7 @@ php flarum cache:clear
 
 ## Remove
 
-Rember to call the `Purge` button in Admin area.
+Remember to call the `Purge` button in Admin area.
 
 If you are about to unistall this extension for good,
 run this command before.
