@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - fix: throw exception instead of hiding the button if user cant embed video
+- fix: render issue
 
 ## [3.3.0] - 2023-05-22
 
