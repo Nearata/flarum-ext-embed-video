@@ -92,7 +92,7 @@ app.initializers.add("nearata-embed-video", () => {
         label: app.translator.trans(
           "nearata-embed-video.admin.settings.permissions.can_create_video_player"
         ),
-        permission: "discussion.nearataEmbedVideoCreate",
+        permission: "discussion.nearata-embed-video.view",
       },
       "start"
     )
@@ -102,7 +102,7 @@ app.initializers.add("nearata-embed-video", () => {
         label: app.translator.trans(
           "nearata-embed-video.admin.settings.permissions.can_view_video_player"
         ),
-        permission: "discussion.nearataEmbedVideoView",
+        permission: "discussion.nearata-embed-video.view",
         allowGuest: true,
       },
       "view"

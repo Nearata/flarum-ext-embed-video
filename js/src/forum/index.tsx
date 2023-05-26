@@ -17,14 +17,6 @@ app.initializers.add("nearata-embed-video", () => {
   })();
 
   extend(TextEditor.prototype, "controlItems", function (items) {
-    const canCreate = app.current
-      .get("stream")
-      ?.discussion.attribute("canNearataEmbedVideoCreate");
-
-    if (!canCreate) {
-      return;
-    }
-
     const text = app.translator.trans(
       "nearata-embed-video.forum.button_tooltip_title"
     );

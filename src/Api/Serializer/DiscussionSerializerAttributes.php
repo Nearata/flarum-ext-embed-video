@@ -10,8 +10,7 @@ class DiscussionSerializerAttributes
     public function __invoke(DiscussionSerializer $serializer, Discussion $discussion, array $attributes)
     {
         return [
-            'canNearataEmbedVideoCreate' => $serializer->getActor()->can('nearataEmbedVideoCreate', $discussion),
-            'canNearataEmbedVideoView' => $serializer->getActor()->can('nearataEmbedVideoView', $discussion),
+            'canNearataEmbedVideoView' => $serializer->getActor()->can('nearata-embed-video.view', $discussion),
         ];
     }
 }

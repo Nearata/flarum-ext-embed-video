@@ -23,7 +23,7 @@ class Render
             return $xml;
         }
 
-        if ($actor->can('nearataEmbedVideoView', $context->discussion)) {
+        if ($actor->can('nearata-embed-video.view', $context->discussion)) {
             return $xml;
         }
 
