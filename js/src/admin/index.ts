@@ -92,7 +92,7 @@ app.initializers.add("nearata-embed-video", () => {
         label: app.translator.trans(
           "nearata-embed-video.admin.settings.permissions.can_create_video_player"
         ),
-        permission: "discussion.nearata-embed-video.view",
+        permission: "discussion.nearata-embed-video.create",
       },
       "start"
     )
