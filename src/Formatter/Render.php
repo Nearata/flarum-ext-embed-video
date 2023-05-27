@@ -16,7 +16,7 @@ class Render
             return $xml;
         }
 
-        if (!$request) {
+        if (! $request) {
             return $xml;
         }
 
