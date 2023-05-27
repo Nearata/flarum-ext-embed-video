@@ -10,9 +10,13 @@ use s9e\TextFormatter\Utils;
 
 class Render
 {
-    public function __invoke(Renderer $renderer, &$context, string $xml, ServerRequestInterface $request = null)
+    public function __invoke(Renderer $renderer, &$context, string $xml, ServerRequestInterface $request = null): string
     {
         if (! ($context instanceof CommentPost)) {
+            return $xml;
+        }
+
+        if (!$request) {
             return $xml;
         }
 
