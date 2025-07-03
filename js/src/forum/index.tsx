@@ -29,7 +29,7 @@ app.initializers.add("nearata-embed-video", () => {
           class="Button Button--icon"
           onclick={() => {
             this.attrs.composer.editor.insertAtCursor(
-              `[embed-video id="${window.crypto.randomUUID()}" url="" type="normal" live="false" qualities=""]`
+              `[embed-video id="${generateUUID()}" url="" type="normal" live="false" qualities=""]`
             );
           }}
         />
